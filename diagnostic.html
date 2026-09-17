@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DegenBot URL diagnostic</title>
+<style>
+  body{margin:0;padding:18px;font:14px/1.6 ui-monospace,Menlo,Consolas,monospace;background:#0d110c;color:#e9f1e1}
+  h1{font-size:15px;margin:0 0 14px;color:#c6ff62;letter-spacing:.04em}
+  .row{border:1px solid #2b312c;border-radius:10px;padding:10px 12px;margin-bottom:9px;background:#161c17}
+  .k{color:#8fa07f;font-size:11px;text-transform:uppercase;letter-spacing:.08em}
+  .v{word-break:break-all;color:#f1f3ed}
+  .warn{color:#ffcf6b}
+  .ok{color:#c6ff62}
+  .tall{max-height:220px;overflow:auto}
+</style>
+</head>
+<body>
+<h1>DegenBot — URL diagnostic</h1>
+<div class="row"><div class="k">location.href</div><div class="v" id="href">…</div></div>
+<div class="row"><div class="k">location.origin + pathname</div><div class="v" id="path">…</div></div>
+<div class="row"><div class="k">location.search</div><div class="v tall" id="search">…</div></div>
+<div class="row"><div class="k">location.hash</div><div class="v tall" id="hash">…</div></div>
+<div class="row"><div class="k">raw fragment part (everything after the first #)</div><div class="v tall" id="frag">…</div></div>
+<div class="row"><div class="k">route this app would parse</div><div class="v" id="route">…</div></div>
+<div class="row"><div class="k">is this a Telegram Mini App?</div><div class="v" id="tg">…</div></div>
+<script>
+(function () {
+  var href = location.href;
+  var path = location.origin + location.pathname;
+  var search = location.search || '(empty)';
+  var hash = location.hash || '(empty)';
+
+  /* Everything after the first '#' in the raw URL, even if the browser moved
+     those characters somewhere else (e.g. into location.search). */
+  var i = href.indexOf('#');
+  var rawFragment = i >= 0 ? href.slice(i + 1) : '(no # in the URL)';
+
+  /* What app.js computes as `route` today (with the routing fix applied). */
+  var route = '(none)';
+  if (location.hash.length > 1) {
+    route = location.hash.slice(1).split('?')[0].split('/')[0] || 'discover';
+  }
+
+  var hasTg = !!(window.Telegram && window.Telegram.WebApp);
+  var hasParams = /tgWebApp/i.test(href);
+
+  function put(id, text) { document.getElementById(id).textContent = text; }
+  put('href', href);
+  put('path', path);
+  put('search', search);
+  put('hash', hash);
+  put('frag', rawFragment);
+  put('route', route);
+  put('tg', (hasTg ? 'yes — Telegram.WebApp is present' : 'no — Telegram.WebApp is NOT present')
+    + (hasParams ? ' / launch parameters found in the URL' : ' / no launch parameters in the URL'));
+
+  /* Make it obvious where the problem is. */
+  var hashEl = document.getElementById('hash');
+  if (location.hash.indexOf('?') > -1) hashEl.classList.add('warn');
+  if (route === 'discover' || route === 'games' || route === 'platforms'
+      || route === 'community' || route === 'collections' || route === 'saved') {
+    document.getElementById('route').classList.add('ok');
+  } else {
+    document.getElementById('route').classList.add('warn');
+  }
+})();
+</script>
+</body>
+</html>
