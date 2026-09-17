@@ -163,12 +163,18 @@
   } catch (err) { /* ignore */ }
 
   if (wa) {
-    /* Deliberately NOT calling requestFullscreen(): the Mini App should open at
-       the window size the client chooses. Forcing full screen on desktop made it
-       swallow the whole Telegram window with no way back to the compact view.
-       (BotFather also has a "Full Screen Mode" setting per app; that one lives
-       on Telegram's side and is not controlled from here.) */
-    call(wa.expand);                                   /* fill the chat viewport */
+    /* Full screen is the client's decision, not the app's. Two calls used to
+       make this app fight the BotFather setting:
+
+         requestFullscreen()  - asked for true full screen outright (removed).
+         expand()             - grows the web view to the *maximum height the
+                                current mode allows*, which fills the half-height
+                                window that "Compact" mode is supposed to give.
+
+       Both are gone, so the app now renders inside whatever window Telegram
+       opens: half height in Compact, the full height in Fullsize/Fullscreen.
+       The layout stays fluid either way - `--tg-viewport-height` below tracks
+       the real height and the frame falls back to the browser viewport size. */
     call(wa.ready);
 
     try {
