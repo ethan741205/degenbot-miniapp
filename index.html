@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no,maximum-scale=1">
+  <meta name="theme-color" content="#111412">
+  <meta name="color-scheme" content="dark">
+  <meta name="description" content="DegenBot — discover your next favorite game, compare platforms, and follow players with your kind of taste.">
+  <title>DegenBot — Find your kind of play.</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23c6ff62'/%3E%3Cpath d='M16 16h18q16 0 16 16T34 48H16zm10 10v12h8q6 0 6-6t-6-6z' fill='%23111412'/%3E%3C/svg%3E">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="styles.css">
+  <!-- Telegram Mini App SDK. Loaded before the app so the web view can be
+       expanded and themed before the first paint settles. -->
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <aside id="sidebar" class="sidebar"></aside>
+  <div class="app-shell">
+    <header id="topbar" class="topbar"></header>
+    <main id="main" tabindex="-1"></main>
+    <footer class="page-footer"><span class="brand-word">DegenBot<span>®</span></span><span>Good taste. Shared.</span><button data-action="about">About DegenBot</button><span>18+</span></footer>
+  </div>
+  <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation"></nav>
+  <div id="compare-dock"></div>
+  <dialog id="modal" aria-labelledby="modal-title"></dialog>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+  <script src="telegram.js"></script>
+</body>
+</html>
