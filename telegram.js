@@ -163,11 +163,12 @@
   } catch (err) { /* ignore */ }
 
   if (wa) {
+    /* Deliberately NOT calling requestFullscreen(): the Mini App should open at
+       the window size the client chooses. Forcing full screen on desktop made it
+       swallow the whole Telegram window with no way back to the compact view.
+       (BotFather also has a "Full Screen Mode" setting per app; that one lives
+       on Telegram's side and is not controlled from here.) */
     call(wa.expand);                                   /* fill the chat viewport */
-    if (typeof wa.requestFullscreen === 'function' && !wa.isFullscreen) {
-      /* Optional: gives edge-to-edge immersive layout where the client allows it. */
-      call(wa.requestFullscreen);
-    }
     call(wa.ready);
 
     try {
