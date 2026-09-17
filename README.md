@@ -27,12 +27,13 @@ npx serve .      # or: python -m http.server 5173
 
 ## Wiring it to Telegram
 
-The published URL is entered in [@BotFather](https://t.me/botfather):
+Registered with [@BotFather](https://t.me/botfather) — live at
+**https://t.me/GetDegenBot/DegenBot**
 
-- `/newapp` creates a Mini App bound to your bot, reachable at
-  `https://t.me/<yourbot>/<appname>`. Its cover image must be exactly
-  640x360 — use `assets/miniapp-cover-640x360.png`.
+- `/newapp` binds a Mini App to the bot. Its cover image must be exactly
+  640x360 — `assets/miniapp-cover-640x360.png`.
 - `/setmenubutton` puts the app behind the chat's menu button.
+- `/myapps` → *Edit link* changes the published URL.
 
 `assets/botfather-1024.png` is the square bot profile picture (a different
 spec from the Mini App cover).
