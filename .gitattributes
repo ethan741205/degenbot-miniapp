@@ -1,6 +1,0 @@
-# Text files are normalised in the repository so GitHub Pages always serves the
-# exact bytes the Mini App was built and verified with (the design depends on
-# typographic characters such as ’ · —).
-* text=auto eol=lf
-*.png binary
-*.webp binary
